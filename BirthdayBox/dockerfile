@@ -1,0 +1,16 @@
+FROM python:3
+
+WORKDIR /usr/src/app
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY run.sh .
+RUN chmod a+x run.sh
+
+COPY Step2-Login.py .
+COPY Step3-GetDate.py .
+COPY Step4-GetOrders.py .
+COPY Step5-UploadOrders.py .
+
+CMD [ "./run.sh" ]
