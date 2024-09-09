@@ -1,16 +1,22 @@
-FROM python:3
+FROM python:3.10
 
 WORKDIR /usr/src/app
 
+#Python Setup
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
-
 COPY run.sh .
 RUN chmod a+x run.sh
-
 COPY Step2-Login.py .
 COPY Step3-GetDate.py .
 COPY Step4-GetOrders.py .
 COPY Step5-UploadOrders.py .
 
-CMD [ "./run.sh" ]
+#Crontab setup
+RUN apt-get update && apt-get -y install cron vim
+COPY crontab /etc/cron.d/crontab
+RUN chmod 0644 /etc/cron.d/crontab
+RUN /usr/bin/crontab /etc/cron.d/crontab
+
+#Override with cron-only
+CMD [ "cron", "-f"]

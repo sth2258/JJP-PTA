@@ -34,7 +34,7 @@ if ";" in config["orders"]:
 
         service.spreadsheets().values().append(spreadsheetId=spreadsheet_id, body=data, range=config["Step5.SheetName"], valueInputOption='USER_ENTERED').execute()
 else:
-    print(str(datetime.datetime.now()) + " "+ __file__ + "No orders found")
+    print(str(datetime.datetime.now()) + " "+ __file__ + " No orders found")
 
 
 set_key(envFile, key_to_set="startTime", value_to_set="")
