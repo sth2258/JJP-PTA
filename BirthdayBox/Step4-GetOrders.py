@@ -27,8 +27,8 @@ def get_params(offset):
         'offset': offset,
         'limit': 50,
         'search[carts.status][value]': 'purchased',
-        'search[store_items.uuid][value]':config["Step4.StoreItemID"],
-        'search[store_items.uuid][by]': 'in',
+        'search[categories.uuid][value]':config["Step4.StoreItemID"],
+        'search[categories.uuid][by]': 'in',
         #'search[carts.purchased_at][value]': '2024-09-01T00:00:00.000-04:00|2024-09-01T23:59:59.999-04:00',
         'search[carts.purchased_at][value]': config['startTime'] + '|' + config['endTime'],
         'search[carts.purchased_at][by]': 'between',
@@ -38,6 +38,7 @@ def get_params(offset):
 
 def parseResponse(output1):
     responseItems = []
+    
     for item in output1["cart_items"]:
         order1 = Order()
         order1.childTeacher=item["options"]["Child's Teacher"]
@@ -47,7 +48,10 @@ def parseResponse(output1):
         order1.parentEmail=item["options"]["Parent/Guardian Email"]
         order1.parentPhone=item["options"]["Parent/Guardian Phone #"]
         order1.deliveryDate=item["options"]["Birthday Box Delivery Date"]
-        order1.snack=item["options"]["Birthday Box Snack Selection"]
+        if "t-shirt" in item["store_item"]["name"].lower():
+            order1.snack="T-Shirt"
+        else:
+            order1.snack=item["options"]["Birthday Box Snack Selection"]
         responseItems.append(order1)
     return responseItems
 
