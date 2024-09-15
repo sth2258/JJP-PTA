@@ -17,7 +17,7 @@ if ";" in config["orders"]:
         attr = order.split(";")
         print(str(datetime.datetime.now()) + " "+ __file__ + " " + order)
         scopes = ["https://www.googleapis.com/auth/drive", "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/spreadsheets"]
-        secret_file = os.path.join(os.getcwd(), 'mount/jjp-pta-ca440ab81da0.json')
+        secret_file = os.path.join(os.getcwd(), config["StepX.GSheetsAPIKeyPath"])
 
         spreadsheet_id = config["Step5.spreadsheet_id"]
 
