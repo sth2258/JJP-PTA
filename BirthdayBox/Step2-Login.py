@@ -1,7 +1,7 @@
 import datetime
 import requests
 import json
-
+import time
 import dotenv
 from dotenv import set_key
 from dotenv import dotenv_values
@@ -36,8 +36,21 @@ payload = {
     }
 }
 
+max_retries = 3
+for i in range(max_retries):
+    try:
+        response = requests.post(url, headers=headers, data=json.dumps(payload))
+        response.raise_for_status()  # Raises an exception for 4XX/5XX errors
+        print(str(datetime.datetime.now()) + " "+ __file__ + " Response code: "+str(response.status_code))
+        break  # Break out of loop if request is successful
+    except requests.exceptions.RequestException as e:
+        print(str(datetime.datetime.now()) + " "+ __file__ + " "+ f"Attempt {i+1} failed: {e}")
+        if i < max_retries - 1:
+            time.sleep(5)  # Wait for 5 seconds before retrying
+        else:
+            print(str(datetime.datetime.now()) + " "+ __file__ + " Max retries reached, request failed.")
+
 # Make the POST request
-response = requests.post(url, headers=headers, data=json.dumps(payload))
 
 output = {}
 output['token'] = response.json()['user']['session']['token']
