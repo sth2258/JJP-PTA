@@ -2,15 +2,14 @@
 
 # Set the variable
 local=false
-pypath=$(which python3)
-if [ "$pypath" = "/usr/bin/python3" ]; then
+if [ "$local" = true ]; then
     python_bin="/usr/bin/python3" 
 else
     python_bin="/usr/local/bin/python3"
     
 fi
 
-#echo "Using Python binary: $python_bin"
+#viecho "Using Python binary: $python_bin"
 
 $python_bin Step2-Login.py
 $python_bin Step3-GetDate.py

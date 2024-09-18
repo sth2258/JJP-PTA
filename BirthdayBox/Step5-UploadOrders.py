@@ -1,5 +1,6 @@
 import httplib2
 import os
+import time
 from apiclient import discovery
 from google.oauth2 import service_account
 import datetime
@@ -31,8 +32,14 @@ if ";" in config["orders"]:
         data = {
             'values' : values 
         }
-
-        service.spreadsheets().values().append(spreadsheetId=spreadsheet_id, body=data, range=config["Step5.SheetName"], valueInputOption='USER_ENTERED').execute()
+        while True:
+            try:
+                service.spreadsheets().values().append(spreadsheetId=spreadsheet_id, body=data, range=config["Step5.SheetName"], valueInputOption='USER_ENTERED').execute()
+                break  # Break out of the loop if the request is successful
+            except Exception as e:
+                print(str(datetime.datetime.now()) + " "+ __file__ + f" Request failed: {e}")
+                print(str(datetime.datetime.now()) + " "+ __file__ + " Retrying in 20 seconds...")
+                time.sleep(20)  # Wait for 20 seconds before retrying        
 else:
     print(str(datetime.datetime.now()) + " "+ __file__ + " No orders found")
 

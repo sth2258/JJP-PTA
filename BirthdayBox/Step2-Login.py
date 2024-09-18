@@ -58,4 +58,3 @@ output['secret'] = response.json()['user']['session']['secret']
 set_key(envFile, key_to_set="token", value_to_set=output['token'])
 set_key(envFile, key_to_set="secret", value_to_set=output['secret'])
 print(str(datetime.datetime.now()) + " "+ __file__ + " completed")
-#print(config)
