@@ -16,8 +16,10 @@ output={'startTime':startDateFormatted_datetime, 'endTime':endDateFormatted_date
 
 #Temporary Override!!!
 if config["Step3.Testing.OverrideDate"] == "True":
-    output={'startTime':"2024-08-01T00:00:00.000-04:00", 'endTime':"2024-09-10T23:59:59.999-04:00"}
+    output={'startTime':"2024-09-11T00:00:00.000-04:00", 'endTime':"2024-10-10T23:59:59.999-04:00"}
 
+print(str(datetime.datetime.now()) + " "+ __file__ + "StartTime: "+output["startTime"])
+print(str(datetime.datetime.now()) + " "+ __file__ + "EndTime: "+output["endTime"])
 set_key(envFile, key_to_set="startTime", value_to_set=output["startTime"])
 set_key(envFile, key_to_set="endTime", value_to_set=output["endTime"])
 print(str(datetime.datetime.now()) + " "+ __file__ + " completed")

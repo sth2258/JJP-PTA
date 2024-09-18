@@ -2,11 +2,12 @@
 
 # Set the variable
 local=false
-
-if [ "$local" = false ]; then
-    python_bin="/usr/local/bin/python3"
+pypath=$(which python3)
+if [ "$pypath" = "/usr/bin/python3" ]; then
+    python_bin="/usr/bin/python3" 
 else
-    python_bin="python3" 
+    python_bin="/usr/local/bin/python3"
+    
 fi
 
 #echo "Using Python binary: $python_bin"
