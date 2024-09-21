@@ -1,3 +1,4 @@
+import time
 import httplib2
 import os
 from apiclient import discovery
@@ -73,7 +74,14 @@ spreadsheet_id = config["Step6.spreadsheet_id"]
 credentials = service_account.Credentials.from_service_account_file(secret_file, scopes=scopes)
 service = discovery.build('sheets', 'v4', credentials=credentials)
 
-data = service.spreadsheets().values().get(spreadsheetId=spreadsheet_id, range=config["Step6.TableRange"]).execute()
+while True:
+    try:
+        data = service.spreadsheets().values().get(spreadsheetId=spreadsheet_id, range=config["Step6.TableRange"]).execute()
+        break;
+    except Exception as e:
+        print(str(datetime.datetime.now()) + " "+ __file__ + f" Request failed: {e}")
+        print(str(datetime.datetime.now()) + " "+ __file__ + " Retrying in 20 seconds...")
+        time.sleep(20)  # Wait for 20 seconds before retrying        
 
 orders = []
 
